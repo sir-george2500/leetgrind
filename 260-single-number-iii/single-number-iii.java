@@ -1,20 +1,22 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
-        HashMap<Integer, Integer> freq = new HashMap<>();
+       int xorAll = 0;
 
-        for(int num: nums){
-            freq.put(num,freq.getOrDefault(num,0)+1);
-        }
+       for(int num: nums){
+          xorAll ^= num;
+       }
 
-        int[] result = new int[2];
-        int idx = 0;
 
-        for(Map.Entry<Integer,Integer> entry:freq.entrySet()){
-            if(entry.getValue() == 1){
-                result[idx++] = entry.getKey();
-            }
-        }
+       int diffBit = xorAll & (-xorAll);
 
-        return result;
+       int x = 0;
+
+       for(int num:nums){
+          if((num & diffBit) != 0){
+              x ^= num;
+          }
+       }
+
+       return new int[]{x,xorAll ^ x};
     }
 }
