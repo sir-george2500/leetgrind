@@ -1,24 +1,27 @@
 class Solution {
     public int numMatchingSubseq(String s, String[] words) {
-        // Build position index: for each char, store sorted positions in s
         List<List<Integer>> charPositions = new ArrayList<>();
-        for (int i = 0; i < 26; i++) {
+
+        for(int i = 0; i < 26; i++){
             charPositions.add(new ArrayList<>());
         }
-        for (int i = 0; i < s.length(); i++) {
+
+        for(int i = 0; i < s.length(); i++){
             charPositions.get(s.charAt(i) - 'a').add(i);
         }
 
         int count = 0;
-        for (String word : words) {
-            if (isSubsequence(word, charPositions)) {
+
+        for(String word: words){
+            if(isSubsequence(word, charPositions)){
                 count++;
             }
         }
+
         return count;
     }
 
-    private boolean isSubsequence(String word, List<List<Integer>> charPositions) {
+     private boolean isSubsequence(String word, List<List<Integer>> charPositions) {
         int prevPos = -1;
         for (int i = 0; i < word.length(); i++) {
             List<Integer> positions = charPositions.get(word.charAt(i) - 'a');
